@@ -3,8 +3,8 @@ package work_java;
 public class Lesson02 {
 
 	public static void main(String[] args) {
-		// TODO 自動生成されたメソッド・スタブ
-		String lastName = "Serizawa";
+		
+	String lastName = "Serizawa";
         String firstName = "Tamao";
         System.out.println(lastName + " " + firstName);
 
