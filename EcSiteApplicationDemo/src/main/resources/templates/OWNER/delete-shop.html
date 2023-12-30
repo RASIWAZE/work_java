@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html　xmlns:th="http://www.thymeleaf.org"
+	　　xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>ショップ削除ページ</title>
+		<link rel="stylesheet" href="/css/common.css">
+		<link rel="stylesheet" href="/css/top.css">		
+		<link rel="stylesheet" href="/css/create-shop.css">		
+		<link rel="stylesheet" href="/css/delete-shop.css">
+	</head>
+
+	<body>
+		<header class="header">
+			<div class="header-inner">
+				<h1>
+					<a th:href="@{/top}">EcShopsite</a>
+				</h1>
+				
+				<div class="name-logout">
+					<ul>
+						<li>
+							<!-- ログインしたユーザー名で挨拶をする -->
+							<p>こんにちは、
+								<a th:href="@{/user-info(userId=${shop.user.id})}"><span sec:authentication="principal.username"/></a>さん
+							</p>
+						</li>
+						<li>
+							<!-- ログアウトボタン -->
+							<form action="#" th:action="@{/logout}" method="POST">
+								<input class="link-btn" type="submit" value="ログアウト">
+							</form>
+						</li>
+					</ul>
+				</div>
+		    </div>
+		</header>
+	
+		<main>
+			<div class="main-inner">
+				<div class="contents">
+					<form th:action="@{/owner/shop-delete-complete}" method="POST">
+						
+						<p>削除すると復元できません。本当に削除しますか？</p>
+						
+						<input type="hidden" name="shopId" th:value="${shop.id}">
+						<input type="submit" th:value="ショップを削除" class="link-btn">
+						
+					</form>
+					
+					<a th:href="@{/owner/shop(shopId=${shop.id})}" th:text="ショップページへ戻る" class="back-btn"/>
+				</div>
+			</div>			
+		</main>
+	</body>
+</html>

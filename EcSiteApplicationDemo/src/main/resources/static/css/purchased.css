@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+.main-inner {
+	flex-direction: column;
+	padding-top: 95px;
+}
+
+.main-inner p {
+	
+	margin-bottom: 30px;	
+}

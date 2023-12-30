@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+.title-edit {
+	display: flex;
+	justify-content: space-between;
+	align-items: last baseline;
+}
+
+.edit-btn a {
+	display: inline-block; /* インラインブロック要素にする */
+	height: 30px;
+	width: 100px;
+	text-align: center;
+	line-height: 28px; /* 行の高さを要素の高さと同じにする */
+	vertical-align: middle; /* 垂直方向の配置を中央にする */
+}
+
+.main-inner .contents ul {
+	padding: 50px 0 100px;	
+}
+
+.main-inner .contents ul .list-item {
+	background-color: gray;
+	border-radius: 10px;
+	font-size: 12px;
+	height: 180px;
+	width: 180px;
+	padding: 0 0 10px;
+	transition: all 0.3s;
+}
+
+li owner-add {
+	background-color: none;
+}
+
+li form{
+	height: 100%;
+	width: 100%;
+}
+
+.owner-add form input {
+	background-image: url(../img/addShop.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 100%;
+	width: 100%;
+	padding-top: 70%;
+	border: none;
+	border-radius: 10px;
+}
+
+.back-btn {
+  display: block; /* ブロック要素にする */
+  width: 200px; /* 幅を指定する */
+  margin: 0 auto; /* 左右の余白を自動にする */
+  text-align: center; /* テキストを中央揃えにする */
+}

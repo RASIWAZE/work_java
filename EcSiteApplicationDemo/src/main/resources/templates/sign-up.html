@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>ユーザー登録ページ</title>
+		<link rel="stylesheet" href="/css/common.css">
+		<link rel="stylesheet" href="/css/product.css">
+		<link rel="stylesheet" href="/css/owner-product.css">		
+		<link rel="stylesheet" href="/css/my-login.css">
+	</head>
+	
+	<body>
+		<main>
+			<div class="main-inner">
+				<div class="contents">
+					
+				    <h2 class="main-title">ユーザー登録</h2>
+				    <form action="#" th:action="@{/registerTheUser}" th:object="${user}" method="POST">
+				        <table>
+							<tr>
+					            <th><label for="id">ユーザー名:</label></th>
+					            <td>
+									<p th:text="${registrationError}" class="error"//>
+									<p th:if="${#fields.hasErrors('id')}" th:errors="*{id}" class="error"/>
+									<input type="text" th:field="*{id}" placeholder="TaroYamada" required>
+					            </td>
+					        </tr>
+					        <tr>
+					            <th><label for="email">メールアドレス:</label></th>
+					            <td>
+									<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"/>
+									<input type="email" th:field="*{email}" placeholder="example@springboot.com" required>
+								</td>
+					        </tr>
+					        <tr>
+					            <th><label for="password">パスワード:</label></th>
+					            <td>
+									<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"/>
+									<input type="password" th:field="*{password}" placeholder="abcDEF123" required>
+								</td>
+					        </tr>
+						</table>
+						
+				        <div>
+				            <input type="submit" value="ユーザー登録" class="link-btn">
+				        </div>
+				    </form>
+				    
+					<p>
+						<a th:href="@{/my-login}">すでにアカウントをお持ちですか？</a>
+					</p>
+				</div>
+			</div>
+		</main>
+	</body>
+</html>
+

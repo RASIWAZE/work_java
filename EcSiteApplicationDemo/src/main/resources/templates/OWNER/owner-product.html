@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title th:text="${product.name}"/>
+		<link rel="stylesheet" href="/css/common.css">
+		<link rel="stylesheet" href="/css/product.css">
+		<link rel="stylesheet" href="/css/owner-product.css">
+	</head>
+	
+	<body>
+		<header class="header">
+			<div class="header-inner">
+				<h1>
+					<a th:href="@{/top}">EcShopsite</a>
+				</h1>
+				
+				<div class="name-logout">
+					<ul>
+						<li>
+							<!-- ログインしたユーザー名で挨拶をする -->
+							<p>こんにちは、
+								<a th:href="@{/user-info}"><span sec:authentication="principal.username"/></a>さん
+							</p>
+						</li>
+						<li>
+							<!-- ログアウトボタン -->
+							<form action="#" th:action="@{/logout}" method="POST">
+								<input class="link-btn" type="submit" value="ログアウト">
+							</form>
+						</li>
+					</ul>
+				</div>
+		    </div>
+		</header>
+		
+		<main>
+			<div class="pankuzu">
+				<a href="index.html" class="pankuzu-item">トップページ</a>
+				<div class="arrow-right"></div>
+				<a th:href="@{/user-info}" th:text="${shop.user.id} + 'のユーザーページ'" class="pankuzu-item"/>
+				<div class="arrow-right"></div>
+				<a th:href="@{/owner/shop(shopId=${shop.id})}" th:text="${shop.name}" class="pankuzu-item"/>
+				<div class="arrow-right"></div>
+				<span th:text="${product.name}"　/>
+			</div>
+			
+			<div class="main-inner">
+				<div class="contents">
+					
+					<div class="product-item-inner">
+						<div class="product-image" th:text="商品画像" />
+						
+						<div class="item-text">
+							<div class="title-edit">
+								<h2 th:text="${product.name}" class="item-title"/>				            
+								
+								<div class="edit-btn">
+									<!-- 編集ボタン -->
+								    <a th:href="@{/owner/edit-product(productId=${product.id})}" th:text="編集" class="link-btn"/>							
+								    <!-- 削除ボタン -->
+								    <a th:href="@{/owner/delete-product(productId=${product.id})}" th:text="削除" class="link-btn"/>							    
+								</div>
+							</div>
+				            
+				
+				            <p th:text="${product.description}" class="item-detail"/>
+				            
+				            <form action="#" th:action="@{/csv-export.cvs}" th:object="${product}" method="GET">
+							    <input type="hidden" th:field="*{name}">
+							    <input type="hidden" th:field="*{description}">
+							    <input type="hidden" th:field="*{price}">
+							    <input type="hidden" th:field="*{inventory}">
+							    <input type="hidden" th:field="*{createdDate}">
+							    <input type="submit" value="CSV出力" class="link-btn" >
+							</form>
+				
+							<div class="price-and-buy">
+								<p th:text="'￥' + ${product.price}" class="price"/>
+								
+								<p th:if="${product.inventory == 0}" th:text="'SOLD OUT'"/>
+								<p th:if="${product.inventory != 0}" th:text="'在庫数:' + ${product.inventory}"/>
+														
+								<a th:href="@{/owner/shop(shopId=${shop.id})}" th:text="ショップページへ戻る" class="back-btn"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>			
+		</main>	
+	</body>
+</html>

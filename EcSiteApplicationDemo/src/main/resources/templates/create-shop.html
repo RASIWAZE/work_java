@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html　xmlns:th="http://www.thymeleaf.org"
+	　　xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>新規ショップ登録</title>
+		<link rel="stylesheet" href="/css/common.css">
+		<link rel="stylesheet" href="/css/top.css">		
+		<link rel="stylesheet" href="/css/create-shop.css">
+	</head>
+	
+	<body>
+		<header class="header">
+			<div class="header-inner">
+				<h1>
+					<a th:href="@{/top}">EcShopsite</a>
+				</h1>
+				
+				<div class="name-logout">
+					<ul>
+						<li>
+							<!-- ログインしたユーザー名で挨拶をする -->
+							<p>こんにちは、
+								<a th:href="@{/user-info(userId=${shop.user.id})}"><span sec:authentication="principal.username"/></a>さん
+							</p>
+						</li>
+						<li>
+							<!-- ログアウトボタン -->
+							<form action="#" th:action="@{/logout}" method="POST">
+								<input class="link-btn" type="submit" value="ログアウト">
+							</form>
+						</li>
+					</ul>
+				</div>
+		    </div>
+		</header>
+
+		<main>
+			<div class="main-inner">
+				<div class="contents">
+				    <h2 class="main-title">ショップ登録</h2>
+				    
+				    <p>※初めてのショップ登録後は再度ログインが必要です※</p>
+				    
+				    <form th:action="@{/register-theShop}" th:object="${shop}" method="POST">
+						
+					    <table>
+							
+					        <tr>								
+					            <th><label for="name">ショップ名：</label></th>
+					            <td>									
+					       			<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"/>
+					                <input type="text" th:field="*{name}" placeholder="※必須　50文字以内で入力してください">
+					            </td>
+					        </tr>
+					        <tr>
+					            <th><label for="description">ショップ説明：</label></th>
+					            <td>
+					                <textarea th:field="*{description}" cols="30" rows="5" placeholder="400文字以下で入力してください"/>
+					                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error"></p>
+					            </td>
+					        </tr>
+					    </table>
+					    <input type="submit" value="ショップ登録" class="link-btn">
+					</form>
+				    
+				    <a th:href="@{/user-info(userId=${shop.user.id})}" th:text="ユーザーページへ戻る" class="back-btn"/>
+				</div>
+			</div>
+		</main>	    
+	</body>
+</html>

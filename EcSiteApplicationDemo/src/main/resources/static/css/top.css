@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+.main-inner .contents {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.main-inner .contents .main-title {
+	margin: 95px 0 70px; 
+}
+
+/* ul内でliタグは最新のものを左上から右へ3列に並べる */
+.main-inner .contents ul {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 20px;
+	list-style-type: none;
+	padding: 0;
+}
+
+.main-inner .contents ul li {
+	background-color: gray;
+	border-radius: 10px;
+	font-size: 12px;
+	height: 180px;
+	width: 180px;
+	padding: 0 0 10px;
+	margin: 0 50px 50px;
+	transition: all 0.3s;
+}
+
+.main-inner .contents ul li:hover {
+	transform: scale(1.1);
+	box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
+}
+
+.main-inner .contents ul li a{
+	height: 100%;
+	width: 100%;
+	display: flex;
+  	justify-content: center;
+  	align-items: flex-end;
+}
+
+.owner-add {
+	background-image: url(../img/addShop.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+

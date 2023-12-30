@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title th:text="${product.name}"/>		
+		<link rel="stylesheet" href="/css/common.css">
+		<link rel="stylesheet" href="/css/product.css">
+	</head>
+	
+	<body>
+		<header class="header">
+			<div class="header-inner">
+				<h1>
+					<a th:href="@{/top}">EcShopsite</a>
+				</h1>
+				
+				<div class="name-logout">
+					<ul>
+						<li>
+							<!-- ログインしたユーザー名で挨拶をする -->
+							<p>こんにちは、
+								<a th:href="@{/user-info}"><span sec:authentication="principal.username"/></a>さん
+							</p>
+						</li>
+						<li>
+							<!-- ログアウトボタン -->
+							<form action="#" th:action="@{/logout}" method="POST">
+								<input class="link-btn" type="submit" value="ログアウト">
+							</form>
+						</li>
+					</ul>
+				</div>
+		    </div>
+		</header>
+		
+		<main>
+			<div class="pankuzu">
+				<a href="index.html" class="pankuzu-item">トップページ</a>
+				<div class="arrow-right"></div>
+				<a th:href="@{/shop(shopId=${shop.id})}" th:text="${shop.name}" class="pankuzu-item"/>
+				<div class="arrow-right"></div>
+				<p th:text="${product.name}" class="present-item"></p>
+			</div>
+			
+			<div class="main-inner">
+				<div class="contents">
+					
+					<div class="product-item-inner">
+						<div class="product-image" th:text="商品画像" />
+			
+						<div class="item-text">
+				            <h2 th:text="${product.name}" class="item-title"/>
+				
+				            <p th:text="${product.description}" class="item-detail"/>
+				            
+				            <form action="#" th:action="@{/csv-export.cvs}" th:object="${product}" method="GET">
+							    <input type="hidden" th:field="*{name}">
+							    <input type="hidden" th:field="*{description}">
+							    <input type="hidden" th:field="*{price}">
+							    <input type="hidden" th:field="*{inventory}">
+							    <input type="hidden" th:field="*{createdDate}">
+							    <input type="submit" value="CSV出力" class="link-btn" >
+							</form>
+
+				
+							<div class="price-and-buy">
+								<p th:text="'￥' + ${product.price}" class="price"/>
+								
+								<p th:if="${product.inventory == 0}" th:text="'SOLD OUT'"/>
+								<p th:if="${product.inventory != 0}" th:text="'在庫数:' + ${product.inventory}"/>
+				
+								<form th:if="${product.inventory != 0}" th:action="@{/purchased}" method="POST">
+									<label for="number">個数</label>
+				                	<input type="number" name="quantity" min="1" th:max="${product.inventory}" class="input-box" required>		                	
+									<input type="hidden" name="productId" th:value="${product.id}">
+				    
+				                	<input type="submit" value="購入する" class="link-btn">
+				              	</form>
+							</div>	
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>	
+	</body>
+</html>

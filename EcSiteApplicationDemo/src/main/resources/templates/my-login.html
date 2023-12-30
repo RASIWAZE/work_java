@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>ログインページ</title>
+		<link rel="stylesheet" href="/css/common.css">
+		<link rel="stylesheet" href="/css/product.css">
+		<link rel="stylesheet" href="/css/owner-product.css">		
+		<link rel="stylesheet" href="/css/my-login.css">
+	</head>
+	
+	<body>
+		<main>
+			<div class="main-inner">
+				<div class="contents">
+					
+				    <h2 class="main-title">ログインフォーム</h2>
+				    
+				    <!-- 入力された内容をPOSTメソッドとして/authenticateTheUserへ送信するフォーム -->
+				    <form action="#" th:action="@{/authenticateTheUser}" method="POST">
+						<table>
+							<div class="error-area" style="color: red;">
+								
+								<!-- urlの?に続く値に"error"が含まれている（ログインできなかった）時のエラー表示 -->
+								<div　th:if="${param.error}">
+									<p>ユーザー名かパスワードが間違っています</p>
+								</div>			
+								
+								<!-- urlの?に続く値に"logout"が含まれている（ログアウトした）時のエラー表示 -->
+								<div　th:if="${param.logout}">
+									<p>ログアウトしました</p>
+								</div>
+							</div>			
+							
+							<!-- ユーザー名とパスワードの入力欄 -->
+					        <tr>
+					            <th><label for="username">ユーザー名:</label></th>
+					            <td><input type="text" id="username" name="username" required></td>
+					        </tr>
+					        <tr>
+					            <th><label for="password">パスワード:</label></th>
+					            <td><input type="password" id="password" name="password" required></td>
+					        </tr>
+						</table>
+						
+						<!-- 入力した内容の送信ボタン -->
+				        <div>
+				            <input type="submit" value="ログイン" class="link-btn">
+				        </div>
+						
+				    </form>
+				    
+					<p>
+						ユーザー登録は<a th:href="@{/sign-up}">こちら</a>
+					</p>
+				</div>
+			</div>
+		</main>	    
+	</body>
+</html>

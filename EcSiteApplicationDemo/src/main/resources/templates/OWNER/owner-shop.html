@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html　xmlns:th="http://www.thymeleaf.org"
+	　　xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+	<head>
+		<meta charset="UTF-8">
+		<title th:text="${shop.name}"/>
+		<link rel="stylesheet" href="/css/common.css">
+		<link rel="stylesheet" href="/css/shop.css">
+		<link rel="stylesheet" href="/css/owner-shop.css">
+	</head>
+	
+	<body>
+		<header class="header">
+			<div class="header-inner">
+				<h1>
+					<a th:href="@{/top}">EcShopsite</a>
+				</h1>
+				
+				<div class="name-logout">
+					<ul>
+						<li>
+							<!-- ログインしたユーザー名で挨拶をする -->
+							<p>こんにちは、
+								<a th:href="@{/user-info}"><span sec:authentication="principal.username"/></a>さん
+							</p>
+						</li>
+						<li>
+							<!-- ログアウトボタン -->
+							<form action="#" th:action="@{/logout}" method="POST">
+								<input class="link-btn" type="submit" value="ログアウト">
+							</form>
+						</li>
+					</ul>
+				</div>
+		    </div>
+		</header>
+		
+		<main>
+			<div class="pankuzu">
+				<a th:href="@{/top}" class="pankuzu-item">トップページ</a>
+				<div class="arrow-right"></div>
+				<a th:href="@{/user-info}" th:text="${shop.user.id} + 'のユーザーページ'" class="pankuzu-item"/>
+				<div class="arrow-right"></div>
+				<span th:text="${shop.name}"></span>
+			</div>
+			
+			
+			<div class="main-inner">
+				<div class="contents">
+					<div class="title-edit">
+						<h2 th:text="${shop.name}" class="shop-name"/>
+						
+						<div class="edit-btn">
+							<a th:href="@{/owner/edit-shop(shopId=${shop.id})}" th:text="編集" class="link-btn"/>
+							<a th:href="@{/owner/delete-shop(shopId=${shop.id})}" th:text="削除" class="link-btn"/>
+						</div>
+					</div>
+					
+					<p　th:text="${shop.description}" class="shop-description"/>
+					
+					<ul class="product-list">
+						<li th:each="tempProduct : ${allProducts}">
+							<a th:href="@{/owner/product(productId=${tempProduct.id})}" th:text="${tempProduct.name}" class="list-item"/>
+						</li>
+						<li  class="owner-add">
+							<!-- 新規商品を追加ページへのリンク -->
+							<form action="#" th:action="@{/owner/create-product}" method="GET">
+								<input type="hidden" name="shopId" th:value=${shop.id}>
+								<input type="submit" value="商品を追加">
+							</form>					
+						</li>
+					</ul>
+					<a th:href="@{/user-info(userId=${shop.user.id})}" th:text="ユーザーページへ戻る" class="back-btn"/>
+				</div>
+			</div>
+		</main>
+	</body>
+</html>

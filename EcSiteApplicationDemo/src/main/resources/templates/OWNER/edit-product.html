@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html　xmlns:th="http://www.thymeleaf.org"
+	　　xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>商品編集ページ</title>
+		<link rel="stylesheet" href="/css/common.css">
+		<link rel="stylesheet" href="/css/top.css">
+		<link rel="stylesheet" href="/css/create-shop.css">
+	</head>
+
+	<body>
+		<header class="header">
+			<div class="header-inner">
+				<h1>
+					<a th:href="@{/top}">EcShopsite</a>
+				</h1>
+				
+				<div class="name-logout">
+					<ul>
+						<li>
+							<!-- ログインしたユーザー名で挨拶をする -->
+							<p>こんにちは、
+								<a th:href="@{/user-info(userId=${product.shop.user.id})}"><span sec:authentication="principal.username"/></a>さん
+							</p>
+						</li>
+						<li>
+							<!-- ログアウトボタン -->
+							<form action="#" th:action="@{/logout}" method="POST">
+								<input class="link-btn" type="submit" value="ログアウト">
+							</form>
+						</li>
+					</ul>
+				</div>
+		    </div>
+		</header>
+	
+		<main>
+			<div class="main-inner">
+				<div class="contents">
+					
+					<h2 class="main-title">商品編集ページ</h2>
+					
+					<form th:action="@{/owner/update-product}" th:object="${product}" method="POST">
+						<table>
+							<tr>
+								<th><label for="name">商品名:</label></th>
+					            <td><input type="text" th:field="*{name}" placeholder="商品名" required></td>
+					            <!-- 商品名のバリデーションエラーを表示する -->
+					            <td><span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red;"/></td>
+					        </tr>
+					        <tr>
+					            <th><label for="description">商品説明:</label></th>
+					            <td><textarea th:field="*{description}" cols="30" rows="5" placeholder="商品の説明を入力してください" /></td>
+					            <!-- 商品説明のバリデーションエラーを表示する -->
+					            <td><span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color:red;"/></td>
+					        </tr>
+					        <tr>
+					            <th><label for="price">価格(\):</label></th>
+					            <td><input type="text" th:field="*{price}" placeholder="商品の価格を入力してください" required/></td>
+					            <!-- 価格のバリデーションエラーを表示する -->
+					            <td><span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" style="color:red;"></span></td>
+					        </tr>
+					        <tr>
+					            <th><label for="inventory">在庫数:</label></th>
+					            <td><input type="number" th:field="*{inventory}" placeholder="商品の在庫数を入力してください" required/></td>
+					            <!-- 在庫数のバリデーションエラーを表示する -->
+					            <td><span th:if="${#fields.hasErrors('inventory')}" th:errors="*{inventory}" style="color:red;"></span></td>
+					        </tr>
+				        </table>				        
+						<input type="hidden" name="productId" th:value="${product.id}">
+			            <input type="submit" value="商品更新" class="link-btn">
+			            
+				    </form>
+				    
+				    <a th:href="@{/owner/product(productId=${product.id})}" th:text="商品ページへ戻る" class="back-btn"/>
+				</div>
+			</div>
+		</main>
+	</body>
+</html>
