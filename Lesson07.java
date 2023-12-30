@@ -1,5 +1,6 @@
 package work_java;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
@@ -140,23 +141,30 @@ public class Lesson07 {
 			String name = outerInfo.getKey();
 			
 			HashMap<String, String> value = outerInfo.getValue();
-			
-			//記述の前半を出力
-			System.out.print("[name => '" + name + "', ");
-			
-			//HashMap<String, HashMap<String, String>>の値のHashMap<String, String>のうちのキーに当たる年齢を抽出、値である出身地はスキップ
-			for(HashMap.Entry<String, String> innerInfo : value.entrySet()) {
-				
-				String age = innerInfo.getKey();
-				
-				
-				if(age == "age") {
-					//記述の後半を出力
-					System.out.println("'age' => '" + innerInfo.getValue() + "']");
-				} else if (age == "pref") {
-					continue;
-				}				
-			}			
-		}
+		    
+		    //記述の前半を配列に格納
+		    ArrayList<String> output = new ArrayList<>();
+		    output.add("[name => '" + name + "', ");
+		    
+		    //HashMap<String, HashMap<String, String>>の値のHashMap<String, String>のうちのキーに当たる年齢を抽出、値である出身地はスキップ
+		    for(HashMap.Entry<String, String> innerInfo : value.entrySet()) {
+		        
+		        String age = innerInfo.getKey();
+		        
+		      //記述の後半を配列に格納し、出身地はスキップ
+		        if(age.equals("age")) {
+		            output.add("'age' => '" + innerInfo.getValue() + "']");
+		        } else if (age.equals("pref")) {
+		            continue;
+		        }               
+		    }
+		    
+		    //配列の内容をそのまま出力
+		    for(String nameAge : output) {
+		        System.out.print(nameAge);
+		    }
+		    
+		    System.out.println();
+		}   
 	}
 }
