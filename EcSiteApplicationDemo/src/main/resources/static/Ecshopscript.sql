@@ -1,3 +1,7 @@
+CREATE USER 'ecshopsite'@'localhost' IDENTIFIED BY 'ecshopsite';
+GRANT ALL PRIVILEGES ON * . * TO 'ecshopsite'@'localhost';
+
+
 USE shop_tracker;
 
 
@@ -53,7 +57,6 @@ DESCRIBE products;
 SHOW TABLES;
 
 -- ユーザーレコードの生成
--- パスワードはユーザー名+123(例:TanakaTaro123)
 INSERT INTO users (id, email, password, active) VALUES
 ('TanakaTaro', 'tanaka_taro@example.com', '{bcrypt}$2a$12$PYTDx24Fo4g2fWCAFJpiGOWWgRaEq6TyngIq9lvxGBAtHssFFmZvy', 1),
 ('SuzukiIchiro', 'suzuki_ichiro@example.com', '{bcrypt}$2a$12$sOEh10TG3MboCmSlbKdfzOM4uBsGmUJnjQhkUR1lWKbpAvhw5.Bqi', 1),

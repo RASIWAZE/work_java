@@ -25,6 +25,9 @@ public interface EcSiteService {
     // ユーザーIDでユーザーを削除
     void deleteUserById(String theId);
     
+    //　ユーザーのメールアドレスを検索
+    User findByEmail(String email);
+    
     
 	////////////////////////////////////////
 	// ロールに対する操作

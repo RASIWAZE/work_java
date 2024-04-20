@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="/css/product.css">
 		<link rel="stylesheet" href="/css/owner-product.css">		
 		<link rel="stylesheet" href="/css/my-login.css">
+		<link rel="stylesheet" href="/css/sign-up-style.css">
 	</head>
 	
 	<body>
@@ -20,7 +21,7 @@
 							<tr>
 					            <th><label for="id">ユーザー名:</label></th>
 					            <td>
-									<p th:text="${registrationError}" class="error"//>
+									<p th:text="${idRegistrationError}" class="error"/>
 									<p th:if="${#fields.hasErrors('id')}" th:errors="*{id}" class="error"/>
 									<input type="text" th:field="*{id}" placeholder="TaroYamada" required>
 					            </td>
@@ -28,6 +29,7 @@
 					        <tr>
 					            <th><label for="email">メールアドレス:</label></th>
 					            <td>
+									<p th:text="${emailRegistrationError}" class="error"/>
 									<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"/>
 									<input type="email" th:field="*{email}" placeholder="example@springboot.com" required>
 								</td>

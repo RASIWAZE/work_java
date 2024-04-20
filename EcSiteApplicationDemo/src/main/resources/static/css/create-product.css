@@ -16,3 +16,7 @@ contents form {
 	color: #D7E1E4;
 	background-color: dimgray;
 }
+
+td span{
+	display: block;
+}

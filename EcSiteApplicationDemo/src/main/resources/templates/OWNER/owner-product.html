@@ -36,7 +36,7 @@
 		
 		<main>
 			<div class="pankuzu">
-				<a href="index.html" class="pankuzu-item">トップページ</a>
+				<a th:href="@{/top}" class="pankuzu-item">トップページ</a>
 				<div class="arrow-right"></div>
 				<a th:href="@{/user-info}" th:text="${shop.user.id} + 'のユーザーページ'" class="pankuzu-item"/>
 				<div class="arrow-right"></div>

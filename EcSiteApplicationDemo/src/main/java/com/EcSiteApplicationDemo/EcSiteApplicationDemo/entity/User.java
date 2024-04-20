@@ -22,24 +22,25 @@ import jakarta.validation.constraints.Size;
 @Table(name="users")  //　name=のDBテーブルと紐づけ
 public class User {
 	
-	@NotBlank(message="ユーザー名が入力されていません")
-	@Size(min = 1, max = 50, message = "1文字以上50文字以下で入力してください")
+	@NotBlank(message="・ユーザー名が入力されていません")
+	@Size(min = 5, max = 50, message = "・5文字以上50文字以下で入力してください")
 	@Pattern(regexp = "^[a-zA-Z0-9]+$", 
-    			message = "ユーザー名は英数字で入力してください")
+    			message = "・ユーザー名は英数字で入力してください")
 	@Id  // このカラムが主キー
 	@Column(nullable = false, length = 50)  // idカラムと紐づけられたフィールド
 	private String id;
 	
-	@NotBlank(message="メールアドレスが入力されていません")
-	@Size(min=1, message="メールアドレスが入力されていません")
+	@NotBlank(message="・メールアドレスが入力されていません")
+	@Size(min=1, max = 60, message="・メールアドレスは1文字以上60文字以下で入力してください")
 	@Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",
-				message="メールアドレスが無効です")
-	@Column(nullable=false, unique=true, length=255)
+				message="・メールアドレスが無効です")
+	@Column(nullable=false, unique=true, length=60)
 	private String email;
 	
-	@Size(min = 10, max = 60, message = "10文字以上60文字以下で入力してください")
+	@NotBlank(message="・パスワードが入力されていません")
+	@Size(min = 10, max = 60, message = "・10文字以上60文字以下で入力してください")
 	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$", 
-    		 message = "パスワードには小文字と大文字の英字と数字をそれぞれ一文字以上含むようにしてください")
+    		 message = "・パスワードはそれぞれ一文字以上の小文字と大文字の英字と数字で作成してください")
 	@Column(nullable=false, unique=true, length=68)
 	private String password;
 	

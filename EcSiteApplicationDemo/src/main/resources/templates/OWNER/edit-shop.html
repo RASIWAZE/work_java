@@ -43,14 +43,20 @@
 					
 					<form th:action="@{/owner/update-shop-complete}" th:object="${shop}" method="POST">
 						<table>
+							<tr>								
+					            <th><label for="name">ショップ名：</label></th>
+					            <td>									
+					       			<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"/>
+					                <input type="text" th:field="*{name}" placeholder="※必須　50文字以内で入力してください">
+					            </td>
+					        </tr>
 							<tr>
-								<th><label for="name">ショップ名：</label></th>
-								<td><input type="text" th:field="*{name}" placeholder="ショップ名" required></td>
-							</tr>
-							<tr>
-								<th><label for="description">ショップ説明：</label></th>
-								<td><textarea th:field="*{description}" cols="30" rows="5" placeholder="ショップの説明を入力してください" required></textarea></td>
-							</tr>
+					            <th><label for="description">ショップ説明：</label></th>
+					            <td>
+					                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error"/>
+					                <textarea th:field="*{description}" cols="30" rows="5" placeholder="200文字以下で入力してください"/>
+					            </td>
+					        </tr>
 						</table>
 						
 						<input type="hidden" name="shopId" th:value="${shop.id}">

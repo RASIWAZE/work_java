@@ -1,4 +1,6 @@
-package com.EcSiteApplicationDemo.EcSiteApplicationDemo.controller;
+ package com.EcSiteApplicationDemo.EcSiteApplicationDemo.controller;
+
+import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.EcSiteApplicationDemo.EcSiteApplicationDemo.entity.Product;
 import com.EcSiteApplicationDemo.EcSiteApplicationDemo.entity.Shop;
+import com.EcSiteApplicationDemo.EcSiteApplicationDemo.entity.User;
 import com.EcSiteApplicationDemo.EcSiteApplicationDemo.service.EcSiteService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
@@ -35,7 +38,7 @@ public class ProductDetailController {
 		
 	/* 商品詳細ページ呼び出しの処理メソッド */
 	@GetMapping("/product")
-	public String productList(@RequestParam("productId") int theId, Model theModel) {
+	public String productList(@RequestParam("productId") int theId, Model theModel, Principal principal) {
 		
 		// 商品IDで商品情報を取得
 		Product theProduct = ecSiteService.findProductById(theId);
@@ -43,9 +46,22 @@ public class ProductDetailController {
 		// 商品と紐づいているショップ情報を取得
 		Shop theShop = theProduct.getShop();
 		
+		// ショップのオーナー情報を取得
+		User theOwner = theShop.getUser();
+		
+		//　オーナーの名前を取得
+		String ownerName = theOwner.getId();
+		
+		// ログインユーザー名を取得
+		String userName = principal.getName();
+		
+		//　オーナー名とログインユーザー名が同じかの真偽をisOwnerに代入
+		boolean isOwner = ownerName.equals(userName);
+		
 		// 取得したデータをそれぞれModelのアトリビュートに追加
 		theModel.addAttribute("product", theProduct);
 		theModel.addAttribute("shop", theShop);
+		theModel.addAttribute("isOwner", isOwner);
 		
 		// 商品詳細ページを返す
 		return "product";

@@ -45,14 +45,13 @@ public class OwnerController {
 	@InitBinder
 	// ビューから渡されたパラメータをjavaオブジェクトにバインドするクラスであるdataBinderに格納
 	public void initBinder(DataBinder dataBinder) {
-
+		
 		// 渡された文字列パラメータの前後の空白を除去するためのStringTrimmerEditorクラスをインスタンス化
 		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
-		
+	
 		// StringクラスのパラメータにStringTrimmerEditorクラスを実行して空白を除去する
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}
-	
 	
 	
 	////////////////////////////////////////
@@ -125,8 +124,30 @@ public class OwnerController {
 	
 	// ショップ編集ページから渡されたデータでショップ情報を更新、その後オーナーショップページへ移動
 	@PostMapping("/update-shop-complete")
-	public String updateShopComplete(@ModelAttribute("shop") Shop theShop, @RequestParam("shopId") int theId) {
+	public String updateShopComplete(@Valid @ModelAttribute("shop") Shop theShop,
+										BindingResult theBindingResult,
+										Model theModel,
+										@RequestParam("shopId") int theId) {
 		
+		// 検証の結果エラーがあった場合、ショップ編集ページに戻す
+		if(theBindingResult.hasErrors()) {	
+	    	
+			// ショップIDからショップ情報を取得
+			Shop tempShop = ecSiteService.findShopById(theId);
+			
+			theShop.setId(theId);
+			theShop.setUser(tempShop.getUser());
+			theShop.setProduct(tempShop.getProduct());
+			
+			//　上記で作成したショップインスタンスをModelインターフェイスに追加
+	    	theModel.addAttribute("shop", theShop);
+	    	
+	    	System.out.println(theShop);
+			
+	    	// ショップ編集ページへ戻す
+			return "owner/edit-shop";
+		}
+				
 		// 更新前のショップ情報をショップIDからショップ情報を取得
 		Shop tempShop = ecSiteService.findShopById(theId);
 		
@@ -280,7 +301,7 @@ public class OwnerController {
 										@RequestParam("shopId") int shopId,
 										Model theModel) {
 		
-		// バリデーションにエラーがある場合、
+		// バリデーションにエラーがある場合、商品登録画面を返す
 		if(theBindingResult.hasErrors()) {
 			
 			// ショップIDからショップ情報を取得
@@ -342,7 +363,26 @@ public class OwnerController {
 	
 	// 商品編集内容で更新処理
 	@PostMapping("/update-product")
-	public String updateProduct(@ModelAttribute("product") Product theProduct, @RequestParam("productId") int theId) {
+	public String updateProduct(@Valid @ModelAttribute("product") Product theProduct,
+									BindingResult theBindingResult,
+									@RequestParam("productId") int theId,
+									Model theModel) {
+		
+		if(theBindingResult.hasErrors()) {
+			
+			// ショップIDからショップ情報を取得
+			Product tempProduct = ecSiteService.findProductById(theId);
+			
+			// 商品にショップ情報をセット
+			theProduct.setId(tempProduct.getId());
+			theProduct.setShop(tempProduct.getShop());
+			
+			// 商品情報を"product"という名前でModelに追加
+	    	theModel.addAttribute("product", theProduct);
+	    	
+	    	// 商品作成ページを再表示
+			return "owner/edit-product"; 
+		}
 		
 		// 更新前の商品情報を商品IDから商品情報を取得
 		Product tempProduct = ecSiteService.findProductById(theId);

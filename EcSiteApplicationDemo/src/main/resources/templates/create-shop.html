@@ -44,7 +44,6 @@
 				    <p>※初めてのショップ登録後は再度ログインが必要です※</p>
 				    
 				    <form th:action="@{/register-theShop}" th:object="${shop}" method="POST">
-						
 					    <table>
 							
 					        <tr>								
@@ -57,8 +56,8 @@
 					        <tr>
 					            <th><label for="description">ショップ説明：</label></th>
 					            <td>
-					                <textarea th:field="*{description}" cols="30" rows="5" placeholder="400文字以下で入力してください"/>
-					                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error"></p>
+					                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error"/>
+					                <textarea th:field="*{description}" cols="30" rows="5" placeholder="200文字以下で入力してください"/>
 					            </td>
 					        </tr>
 					    </table>
@@ -71,3 +70,4 @@
 		</main>	    
 	</body>
 </html>
+

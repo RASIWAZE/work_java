@@ -51,7 +51,7 @@ public class SignUpController {
     	//　ユーザークラスのインスタンスを作成
     	User theUser = new User();
     	
-    	// ユーザーインスタンスをｕｓｅｒとしてＭｏｄｅｌインターフェイスに追加
+    	// ユーザーインスタンスをuserとしてModelインターフェイスに追加
     	theModel.addAttribute("user", theUser);
     	
     	// ユーザー新規登録ページを返す
@@ -66,6 +66,14 @@ public class SignUpController {
                                     HttpSession session, Model theModel) {
 
         System.out.println(user.getPassword()); 
+        
+        // ユーザー登録画面で入力されたデータにエラーがあった場合、ユーザー登録画面にリダイレクトされる
+        if (theBindingResult.hasErrors()){
+
+            System.out.println("登録情報入力にエラーがありました。\n"); 
+
+            return "sign-up";
+        }
 
         // ユーザーが入力したパスワードをbcryptアルゴリズムでハッシュ化
         String theUserPass = passwordEncoder.encode(user.getPassword());
@@ -75,23 +83,30 @@ public class SignUpController {
 
         System.out.println(tempUser); 
 
-        // ユーザー登録画面で入力されたデータにエラーがあった場合、ユーザー登録画面にリダイレクトされる
-        if (theBindingResult.hasErrors()){
-
-            System.out.println("登録情報入力にエラーがありました。\n"); 
-
-            return "sign-up";
-        }        
+                
 
         // tempUserのid(ユーザー名)と同じユーザー名があった場合取得して、Userクラスのexistingに代入
-        User existing = ecSiteService.findUserById(tempUser.getId());
+        User existingId = ecSiteService.findUserById(tempUser.getId());
         
-        // existingに値が代入されていた場合、新規ユーザー登録画面へ戻す
-        if (existing != null){
+        // existingIdに値が代入されていた場合、新規ユーザー登録画面へ戻す
+        if (existingId != null){
             theModel.addAttribute("user", new User());
-            theModel.addAttribute("registrationError", "このユーザー名は既に使用されています。");
+            theModel.addAttribute("idRegistrationError", "・このユーザー名は既に使用されています。");
 
             System.out.println("このユーザー名は既に使用されています。");
+
+            return "sign-up";
+        }
+        
+        // tempUserのメールアドレスと同じメールアドレスがあった場合取得して、UserクラスのexistingEmailに代入
+        User existingEmail = ecSiteService.findByEmail(tempUser.getEmail());
+        
+        // existingEmailに値が代入されていた場合、新規ユーザー登録画面へ戻す
+        if (existingEmail != null){
+            theModel.addAttribute("user", new User());
+            theModel.addAttribute("emailRegistrationError", "・このメールアドレスは既に使用されています。");
+
+            System.out.println("このメールアドレスは既に使用されています。");
 
             return "sign-up";
         }
@@ -105,6 +120,6 @@ public class SignUpController {
         session.setAttribute("user", tempUser);
 
         // 重複して同じユーザーを保存できないようにredirectプレフィックスを追加してトップページへリダイレクトする
-        return "redirect:/top";
+        return "redirect:/my-login";
     }
 }

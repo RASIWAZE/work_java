@@ -21,7 +21,7 @@
 						<li>
 							<!-- ログインしたユーザー名で挨拶をする -->
 							<p>こんにちは、
-								<a th:href="@{/user-info(userId=${product.shop.user.id})}"><span sec:authentication="principal.username"/></a>さん
+								<a th:href="@{/user-info}"><span sec:authentication="principal.username"/></a>さん
 							</p>
 						</li>
 						<li>

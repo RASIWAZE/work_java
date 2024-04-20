@@ -20,8 +20,9 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
+import validation.DescriptionCount;
+import validation.NameCount;
 
 @Entity
 @Table(name = "shops")
@@ -32,14 +33,17 @@ public class Shop {
 	@Column(name = "id")  // idカラムと紐づけられたフィールド
     private int id;
 
-	@NotBlank(message = "ショップ名が入力されていません")
-    @Size(max = 50, message = "ショップ名は50文字以内で入力してください")
+	@Pattern(regexp =  "^[a-zA-Z0-9\\u30A1-\\u30FF\\u3041-\\u3096\\u4E00-\\u9FFF]+$", 
+				message = "・特殊文字・スペースを含まない日英数字で入力してください")
+	@NameCount
     @Column(name = "shop_name", nullable = false, length = 255)
     private String name;
 
-	@Size(max = 400, message = "ショップ説明は400文字以内で入力してください")
-    @Column(name = "description", columnDefinition = "TEXT")
-    private String description;
+	@Pattern(regexp =  "^[a-zA-Z0-9\\s\\u30A1-\\u30FF\\u3041-\\u3096\\u4E00-\\u9FFF\\u3000-\\u303F\\uFF01-\\uFF60\\u3001-\\u303F.,!]+$", 
+			message = "・日英数字で入力してください")
+	@DescriptionCount
+	@Column(name = "description", columnDefinition = "TEXT")
+	private String description;
 
     @Column(name = "created_date", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp createdDate;

@@ -20,9 +20,10 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
+import validation.DescriptionCount;
+import validation.NameCount;
 
 
 @Entity
@@ -36,27 +37,32 @@ public class Product {
 	@JsonIgnore
     private int id;
 
-	@NotBlank(message = "商品名を入力してください")
-	@Size(max = 50, message = "商品名は50文字以内で入力してください")
+
+	@Pattern(regexp =  "^[a-zA-Z0-9\\u30A1-\\u30FF\\u3041-\\u3096\\u4E00-\\u9FFF]+$", 
+			message = "・特殊文字・スペースを含まない日英数字で入力してください")
+	@NameCount
     @Column(name = "product_name", nullable = false, length = 255)
 	@JsonProperty("商品名")
     private String name;
 
-	@Size(max = 500, message = "商品説明は500文字以内で入力してください")
+	@Pattern(regexp =  "^[a-zA-Z0-9\\s\\u30A1-\\u30FF\\u3041-\\u3096\\u4E00-\\u9FFF\\u3000-\\u303F\\uFF01-\\uFF60\\u3001-\\u303F.,!]+$", 
+				message = "・日英数字で入力してください")
+	@DescriptionCount
     @Column(name = "description", columnDefinition = "TEXT")
 	@JsonProperty("商品説明")
     private String description;
     
-	@NotNull(message = "価格を入力してください")
-	@Min(value= 0, message = "0以上で入力してください")
-	@Max(value = 99999999, message = "99999999以下で入力してください")
+	// priceをString型に変更してperseIntでメソッド内バリデーションを作成
+	@NotNull(message = "・価格を入力してください")
+	@Min(value= 0, message = "・0以上で入力してください")
+	@Max(value = 99999999, message = "・99999999以下で入力してください")
     @Column(name = "price", nullable = false)
 	@JsonProperty("価格")
     private int price;
 	
-	@NotNull(message = "在庫数を入力してください")
-	@Min(value= 0, message = "0以上で入力してください")
-	@Max(value = 99999999, message = "99999999以下で入力してください")
+	@NotNull(message = "・在庫数を入力してください")
+	@Min(value= 0, message = "・0以上で入力してください")
+	@Max(value = 99999999, message = "・99999999以下で入力してください")
     @Column(name = "inventory", nullable = false)
 	@JsonProperty("在庫数")
     private int inventory;

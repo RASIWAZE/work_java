@@ -69,7 +69,7 @@
 								<p th:if="${product.inventory == 0}" th:text="'SOLD OUT'"/>
 								<p th:if="${product.inventory != 0}" th:text="'在庫数:' + ${product.inventory}"/>
 				
-								<form th:if="${product.inventory != 0}" th:action="@{/purchased}" method="POST">
+								<form th:unless="${isOwner}" th:if="${product.inventory != 0}" th:action="@{/purchased}" method="POST">
 									<label for="number">個数</label>
 				                	<input type="number" name="quantity" min="1" th:max="${product.inventory}" class="input-box" required>		                	
 									<input type="hidden" name="productId" th:value="${product.id}">

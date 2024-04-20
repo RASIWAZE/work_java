@@ -38,10 +38,10 @@ public class RegisterShopController {
 	@InitBinder
 	// ビューから渡されたパラメータをjavaオブジェクトにバインドするクラスであるdataBinderに格納
 	public void initBinder(DataBinder dataBinder) {
-
+		
 		// 渡された文字列パラメータの前後の空白を除去するためのStringTrimmerEditorクラスをインスタンス化
 		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
-		
+	
 		// StringクラスのパラメータにStringTrimmerEditorクラスを実行して空白を除去する
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}

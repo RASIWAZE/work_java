@@ -8,4 +8,6 @@ import com.EcSiteApplicationDemo.EcSiteApplicationDemo.entity.User;
  * エンティティタイプとプライマリキーのデータ型を指定 */
 public interface UserRepository extends JpaRepository<User, String>{
 
+	User findByEmail(String email);
+
 }

@@ -74,7 +74,8 @@ public class EcSiteServiceImpl implements EcSiteService {
 	    
 	    // 指定したユーザーIDで見つかったユーザーデータを返す
 	    return theUser;
-	}	
+	}
+	
 	
 	@Override
 	// 新しいユーザーの登録
@@ -108,6 +109,15 @@ public class EcSiteServiceImpl implements EcSiteService {
 	public void deleteUserById(String theId) {
 		
 		userRepository.deleteById(theId);
+	}
+	
+	
+	@Override
+	public User findByEmail(String email) {
+		
+		User theUser = userRepository.findByEmail(email);
+		
+		return theUser;
 	}
 	
 	
