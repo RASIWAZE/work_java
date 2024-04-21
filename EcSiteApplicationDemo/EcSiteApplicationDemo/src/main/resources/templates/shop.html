@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html　xmlns:th="http://www.thymeleaf.org"
+	　　xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+	<head>
+		<meta charset="UTF-8">
+		<title th:text="${shop.name}"/>
+		<link rel="stylesheet" href="/css/common.css">
+		<link rel="stylesheet" href="/css/shop.css">
+	</head>
+	
+	<body>
+		<header class="header">
+			<div class="header-inner">
+				<h1>
+					<a th:href="@{/top}">EcShopsite</a>
+				</h1>
+				
+				<div class="name-logout">
+					<ul>
+						<li>
+							<!-- ログインしたユーザー名で挨拶をする -->
+							<p>こんにちは、
+								<a th:href="@{/user-info}"><span sec:authentication="principal.username"/></a>さん
+							</p>
+						</li>
+						<li>
+							<!-- ログアウトボタン -->
+							<form action="#" th:action="@{/logout}" method="POST">
+								<input class="link-btn" type="submit" value="ログアウト">
+							</form>
+						</li>
+					</ul>
+				</div>
+		    </div>
+		</header>
+		
+		<main>
+			<div class="pankuzu">
+				<a th:href="@{/top}" class="pankuzu-item">トップページ</a>
+				<div class="arrow-right"></div>
+				<p th:text="${shop.name}" class="present-item"></p>
+			</div>
+			
+			<div class="main-inner">
+				<div class="contents">
+					<h2 th:text="${shop.name}" class="shop-name"/>
+					
+					<p　th:text="${shop.description}" class="shop-description"/>
+					
+					<ul class="product-list">
+						<li th:each="tempProduct : ${allProducts}">
+							<a th:href="@{/product(productId=${tempProduct.id})}" class="list-item">
+								<p th:text="${tempProduct.name}"/>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</main>
+	</body>
+</html>

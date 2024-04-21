@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html　xmlns:th="http://www.thymeleaf.org"
+	　　xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>新規商品登録ページ</title>
+		<link rel="stylesheet" href="/css/common.css">
+		<link rel="stylesheet" href="/css/top.css">
+		<link rel="stylesheet" href="/css/create-shop.css">
+		<link rel="stylesheet" href="/css/create-product.css">
+	</head>
+
+	<body>
+		<header class="header">
+			<div class="header-inner">
+				<h1>
+					<a th:href="@{/top}">EcShopsite</a>
+				</h1>
+				
+				<div class="name-logout">
+					<ul>
+						<li>
+							<!-- ログインしたユーザー名で挨拶をする -->
+							<p>こんにちは、
+								<a th:href="@{/user-info(userId=${product.shop.user.id})}"><span sec:authentication="principal.username"/></a>さん
+							</p>
+						</li>
+						<li>
+							<!-- ログアウトボタン -->
+							<form action="#" th:action="@{/logout}" method="POST">
+								<input class="link-btn" type="submit" value="ログアウト">
+							</form>
+						</li>
+					</ul>
+				</div>
+		    </div>
+		</header>
+	
+		<main>
+			<div class="main-inner">
+				<div class="contents">
+					
+				    <h2 class="main-title">商品登録</h2>
+				    
+					<form th:action="@{register-theProduct}" th:object="${product}" method="POST">
+				        <table>
+							<tr>
+								<th><label for="name">商品名:</label></th>
+					            <td>
+									<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"/>
+									<input type="text" th:field="*{name}" placeholder="商品名">
+					            </td>
+					        </tr>
+					        <tr>
+					            <th><label for="description">商品説明:</label></th>
+					            <td>
+									<span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error"/>
+									<textarea th:field="*{description}" cols="30" rows="5" placeholder="商品の説明を入力してください"/>					            
+					            </td>
+					        </tr>
+					        <tr>
+					            <th><label for="price">価格(\):</label></th>
+					            <td>
+									<span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="error"/>
+									<input type="number" th:field="*{price}" placeholder="商品の価格を入力してください" required max="99999999"/>
+								</td>
+					        </tr>
+					        <tr>
+					            <th><label for="inventory">在庫数:</label></th>
+					            <td>
+									<span th:if="${#fields.hasErrors('inventory')}" th:errors="*{inventory}" class="error"/>
+									<input type="number" th:field="*{inventory}" placeholder="商品の在庫数を入力してください" required max="99999999"/>
+					            </td>
+					        </tr>
+				        </table>
+						<input type="hidden" name="shopId" th:value="${product.shop.id}">
+			            <input type="submit" value="商品登録" class="link-btn">
+			            
+					</form>
+				    
+				    <a th:href="@{/owner/shop(shopId=${product.shop.id})}" th:text="ショップページへ戻る" class="back-btn"/>
+				</div>
+			</div>
+		</main>	    
+	</body>
+</html>

@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+contents form {
+	height: 500px;
+}
+
+.main-inner .contents .back-btn {
+	background-color: darkgray;
+	border-radius: 5px;
+	font-size: 14px;
+	padding: 10px 20px;
+	transition: all 0.2s;
+}
+
+.main-inner .contents .back-btn:hover {
+	color: #D7E1E4;
+	background-color: dimgray;
+}
+
+td span{
+	display: block;
+}

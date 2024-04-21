@@ -1,0 +1,6 @@
+<!-- localhost:8080のデフォルトのhtmlファイルはindex.htmlになっている
+	　localhost:8080以降の正式なurlを指定できなかったとしてもwebアプリケーションのtopページにリダイレクトできるようにindex.htmlファイルに設定 -->
+<!-- localhost:8080が呼び出されたら、http-equiv="refresh"で再読み込み
+	　content以降で読み込みまでの時間（秒）とリダイレクト先のurlを記述　-->
+<meta http-equiv="refresh"
+	  content="0; URL='/top'">

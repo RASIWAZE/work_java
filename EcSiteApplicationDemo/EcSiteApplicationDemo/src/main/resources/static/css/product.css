@@ -1,0 +1,60 @@
+@charset "UTF-8";
+
+.product-item-inner {
+	
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: 95px 0 0;
+}
+
+.product-image {
+	background-image: url(../img/Designer.jpeg);
+	height: 500px;
+	width: 40%;
+	background-color: gray;
+}
+
+.item-text {
+	width: 40%;
+}
+
+.item-text .item-title {
+	margin: 50px 0 30px;
+}
+
+.item-text .item-detail {
+	margin-bottom: 80px;
+}
+.item-text .price-and-buy {
+	height: 300px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+
+/* 個数入力欄の高さと幅を指定 */
+.input-box {
+  height: 30px;
+  width: 70px;
+  border-radius: 5px;
+  padding-left: 10px;
+  margin: 0 10px
+}
+
+.price-and-buy form .link-btn {
+	display: block;
+	margin: 45px 0 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+

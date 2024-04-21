@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+.title-edit {
+	display: flex;
+	justify-content: space-between;
+	align-items: last baseline;
+}
+
+.title-edit .edit-btn a {
+	display: inline-block; /* インラインブロック要素にする */
+	height: 30px;
+	width: 70px;
+	text-align: center;
+	line-height: 28px; /* 行の高さを要素の高さと同じにする */
+	vertical-align: middle; /* 垂直方向の配置を中央にする */
+}
+
+.back-btn {
+	display: block;
+	margin: 0 auto;
+}
+
+
+
+
+
+
+
